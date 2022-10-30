@@ -23,9 +23,9 @@ export function Login() {
     if (!validate(email,'email')) return;
     if (!validate(password,'password')) return;
 
-    let user = ctx.users.find( element =>  element.email == email)
+    let user = ctx.users.find( element =>  element.email === email)
 
-    if (user && user.password == password){
+    if (user && user.password === password){
       console.log(`${user.name} logged in`)
       setAuthenticated(true);
       ctx.userLoggedIn = user.email;
@@ -38,7 +38,7 @@ export function Login() {
       header = "Login"
       status={status}
       body =         
-        { authenticated == false ? (
+        { !authenticated ? (
           <>
           Email<br/>
           <input type = "input" className="form-control" id="email" placeholder="Enter login" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br/>

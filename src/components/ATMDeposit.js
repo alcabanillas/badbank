@@ -1,4 +1,4 @@
-const ATMDeposit = ({ onChange, isValid }) => {
+export const ATMDeposit = ({ onChange, isValid }) => {
   return (
     <div className="text-center">
         <div className="row">
