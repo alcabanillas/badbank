@@ -24,6 +24,7 @@ export const initialState = {
       balance: 200,
     },
   ],
+  userLoggedIn: null
 };
 
 

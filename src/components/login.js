@@ -28,6 +28,7 @@ export function Login() {
     if (user && user.password == password){
       console.log(`${user.name} logged in`)
       setAuthenticated(true);
+      ctx.userLoggedIn = user.email;
     }
   }
 
