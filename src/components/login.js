@@ -21,14 +21,11 @@ export function Login() {
     if (!validate(email,'email')) return;
     if (!validate(password,'password')) return;
 
-    //let user = state.users.find( element =>  element.email === email)
+    actions.loginUser({email, password});
+  }
 
-    //if (user && user.password === password){
-    //  console.log(`${user.name} logged in`)
-      
-      
-    //}
-    actions.logIn({email, password});
+  function handleLogout(){
+    actions.logoutUser();
   }
 
   return (
@@ -38,7 +35,7 @@ export function Login() {
       header = "Login"
       status={status}
       body =         
-        { state.currentUser == null ? (
+        { !state.currentUser ? (
           <>
           Email<br/>
           <input type = "input" className="form-control" id="email" placeholder="Enter login" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br/>
@@ -46,7 +43,8 @@ export function Login() {
           <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)}></input><br/>
           <button type="submit" className="btn btn-light" onClick={handleLogin}>Login</button>
           </>
-          ) : (<div>User logged in</div>)
+          ) : (<div>User logged in<br />
+          <button type="submit" className="btn btn-light" onClick={handleLogout}>Logout</button></div>)
         }
     />
   );

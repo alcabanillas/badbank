@@ -40,7 +40,7 @@ export function NavBar() {
                 </a>
               </li>
             )}
-            {state.userAuthenticated && (
+            {state.currentUser && (
               <li className="nav-item">
                 <a className="nav-link" href="#/withdraw">
                   WithDraw

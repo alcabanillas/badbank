@@ -6,90 +6,7 @@ const actions = {
   ADD_USER: "ADD_USER",
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
-  WITHDRAW: "WITHDRAW",
-  DEPOSIT: "DEPOSIT"
-};
-
-const useActions = (state, dispatch) => {
-  
-  //CREATES A NEW USER
-  const addUser = newUser => {
-    let newUsers = [...state.users];
-    newUsers.push(newUser);
-    dispatch({
-      type: "ADD_USER",
-      payload: newUsers
-    });
-  };
-
-  //TRIES TO LOGIN WITH THE PROVIDED CREDENTIALS
-  const logIn = credentials => { 
-    console.log('In logIn')
-   let currentUser = state.users.find(element => element.password === credentials.password && element.email === credentials.email);
-   if(currentUser) {
-    dispatch({
-      type: "LOGIN",
-      payload: {...currentUser}
-    });
-   }
-   else {
-     alert("login error, check your credentials");
-   }
-  }
-
-  const withdraw = amount => {
-    let userIndex =  state.users.findIndex(element => element.email === state.currentUser.email)
-    let newUsers = [...state.users];
-    newUsers[userIndex].balance = newUsers[userIndex].balance - amount;
-    dispatch({
-      type:"UPDATE_USERS",
-      payload: newUsers
-    });
-
-    dispatch({
-      type:"UPDATE_USER",
-      payload: {...state.currentUser, balance: state.currentUser.balance - amount}
-    });
-  }
-
-  const deposit = amount => {
-    let userIndex = state.users.findIndex(element => element.email === state.currentUser.email)
-    let newUsers = [...state.users];
-    newUsers[userIndex].balance = newUsers[userIndex].balance + amount;
-    dispatch({
-      type:"UPDATE_USERS",
-      payload: newUsers
-    });
-
-    dispatch({
-      type:"UPDATE_USER",
-      payload: {...state.currentUser, balance: state.currentUser.balance + amount}
-    });
-  }
-
-  const setSuccess = value => {
-    dispatch({
-      type:"SET_SUCCESS",
-      payload: value
-    });
-  }
-
-  const setError = value => {
-    dispatch({
-      type: "SET_ERROR",
-      payload: value
-    })
-  }
-
-
-  return {
-    addUser,
-    logIn,
-    withdraw,
-    deposit,
-    setSuccess,
-    setError
-  };
+  UPDATE_USERS: "UPDATE_USERS"
 };
 
 const initialState = {
@@ -113,29 +30,29 @@ const initialState = {
 }
 
 function reducer(state, action) {
-  console.log('In reducer')
   switch (action.type) {
-    case "ADD_USER":
-      return { ...state, users: action.payload };
-    case "LOGIN":
-      return { ...state, currentUser: action.payload };
-    case "UPDATE_USERS":
+    case actions.LOGIN:
+      return { ...state, 
+        currentUser: action.payload };
+    case actions.LOGOUT:
+      return { ...state, 
+        currentUser: null };
+    case actions.UPDATE_USERS:
       return {...state, users: action.payload}
-    case "UPDATE_USER": 
-      return {...state, currentUser: action.payload}
     case "SET_SUCCESS":
       return {...state, success: action.payload}
     case "SET_ERROR":
       return {...state, error: action.payload}
     default:
-    break;
+      throw new Error();
   }
 }
 
-/*
-function reducer(state, action) {
+
+/*function reducer(state, action) {
+  console.log(action.type)
   switch (action.type) {
-    case "ADD_USER": {
+    case actions.ADD_USER: {
       console.log(`New User: ${action}`)
       return {
         ...state,
@@ -149,22 +66,17 @@ function reducer(state, action) {
         }]
       };
     }
-    case "LOGIN":
-      console.log(`Login: ${action.userEmail}`)
-      return {
-        ...state,
-        userLoggedIn: action.userEmail,
-        userAuthenticated : true
-      };
-    case "LOGOUT":
+    case actions.LOGIN:
+      
+    case actions.LOGOUT:
       return {
         ...state,
         userLoggedIn: null,
         userAuthenticated : false
       };
-    case "WITHDRAW":
+    case actions.WITHDRAW:
       return {};
-    case "DEPOSIT":
+    case actions.DEPOSIT:
       console.log(`New deposit: ${action.amount} ${state.userLoggedIn}`)
       let newUsers = state.users.map( element => {
         if (element.email === state.userLoggedIn) {
@@ -179,31 +91,74 @@ function reducer(state, action) {
     default:
       return state;
   }
+}*/
+
+const useActions = (state, dispatch) => {
+  const addUser = (userInfo) => {
+    let currentUser = state.users.find( elem => elem.email === userInfo.email)
+    if (currentUser) {
+      alert("User already exists")
+      return;
+    }
+    dispatch({ type: actions.UPDATE_USERS, payload: [...state.users, userInfo] });
+  }
+
+  const loginUser = (credentials) => {
+    let currentUser = state.users.find( elem => elem.email === credentials.email && elem.password === credentials.password)
+
+    if (!currentUser) {
+      alert("Invalid credentials")
+      return;
+    }
+
+    dispatch({ type: actions.LOGIN, payload: credentials.email })
+  }
+
+  const logoutUser = () => {
+    dispatch({ type: actions.LOGOUT})
+  }
+
+  const deposit = (amount) => {
+    let newUsers = state.users.map( element => {
+      if (element.email === state.currentUser) {
+        element.balance += amount;
+      }
+      return element;
+    })
+    dispatch({ type: actions.UPDATE_USERS, payload: newUsers })
+  }
+
+  const withDraw = (amount) => {
+    let newUsers = state.users.map( element => {
+      if (element.email === state.currentUser) {
+        element.balance -= amount;
+      }
+      return element;
+    })
+    dispatch({ type: actions.UPDATE_USERS, payload: newUsers })
+  }
+
+  return {
+    addUser,
+    loginUser,
+    logoutUser,
+    withDraw,
+    deposit
+  }
+
 }
-*/
+
 
 
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions = useActions(state, dispatch);
-  const value = { state, dispatch, actions };
 
-
-  /*const value = {
-    users: state.users,
-    userLoggedIn: state.userLoggedIn,
-    userAuthenticated: state.userAuthenticated,
-    addUser: (userInfo) => {
-      dispatch({ type: actions.ADD_USER, userInfo });
-    },
-    loginUser: (userEmail) => {
-      dispatch({ type: actions.LOGIN, userEmail });
-    },
-    deposit: (amount) => {
-      dispatch({ type: actions.DEPOSIT, amount})
-    },
-  };*/
+  const value = {
+    state,
+    actions
+  };
 
   return (
     <UserContext.Provider value={value}>

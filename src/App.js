@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
-import { Route, Link, HashRouter, Routes } from "react-router-dom";
+import { Route, HashRouter, Routes } from "react-router-dom";
 import { NavBar } from "./navbar";
 import { Home } from "./components/home";
 import { CreateAccount } from "./components/createaccount";
@@ -15,8 +13,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
-
   return (
     <HashRouter>
       <NavBar />

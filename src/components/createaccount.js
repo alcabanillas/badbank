@@ -10,7 +10,7 @@ export function CreateAccount(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {addUser} = useContext(UserContext);
+  const {actions} = useContext(UserContext);
 
   function validate(field, label){
     if (!field) {
@@ -27,7 +27,7 @@ export function CreateAccount(){
     if (!validate(email,'email')) return;
     if (!validate(password,'password')) return;
 
-    addUser({name, email, password, balance:150})
+    actions.addUser({name, email, password, balance:150})
     setShow(false)
   }
 

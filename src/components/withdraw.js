@@ -1,12 +1,44 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../state/AppState";
+import { ATMDeposit } from "./ATMDeposit";
 
-export function WithDraw(){
-  const ctx = useContext(UserContext);
+export const WithDraw = () => {
+  const [amount, setAmount] = useState(0); // state of this transaction
+  const [validTransaction, setValidTransaction] = useState(false);
+
+  const {state, actions} = useContext(UserContext);
+  const user = state.users.find(elem => elem.email === state.currentUser);
+
+  const handleChange = (event) => {
+    if (Number(event.target.value) < 0) {
+      setValidTransaction(false);
+      return;
+    }
+
+    if (Number(event.target.value) > user.balance) {
+      setValidTransaction(false)
+      return;
+    }
+
+    setValidTransaction(true);
+    setAmount(Number(event.target.value));
+  };
+
+  const handleSubmit = (event) => {
+    actions.withDraw(amount);
+    event.preventDefault();
+  };
+
   return (
-    <div>
-    <h1>WithDraw</h1>
-    <span>{JSON.stringify(ctx.users)}</span>
-    </div>
-  )
-}
+    <form onSubmit={handleSubmit} className="container overflow-hidden">
+      {JSON.stringify(state)}
+      <div className="row text-center">
+        <h2 className="col" id="total">
+          Balance ${user.balance}
+        </h2>
+      </div>
+
+      <ATMDeposit onChange={handleChange} isValid={validTransaction} />
+    </form>
+  );
+};

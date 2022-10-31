@@ -1,13 +1,45 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../state/AppState";
+import { BankCard } from "./bankcard";
 
-export function Balance(){
+export function Balance() {
   //Check the balance of any one user by their given email
-  const ctx = useContext(UserContext);
+  const [userName, setUserName] = useState("");
+  const { state } = useContext(UserContext);
+  const [userFound, setUserFound] = useState(false);
+  const [userBalance, setUserBalance] = useState(null);
+
+  const handleSubmit = () => {
+    let newUser = state.users.find((elem) => elem.email === userName);
+
+    if (newUser) {
+      setUserBalance(newUser);
+      setUserFound(true);
+    }
+  };
+
   return (
-    <div>
-    <h1>Balance</h1>
-    <span>{JSON.stringify(ctx.users)}</span>
-    </div>
-  )
+    <BankCard
+      txtcolor="black"
+      header="Balance"
+      body={
+        <>
+          Email
+          <br />
+          <input type="input" className="form-control"
+            id="userName" placeholder="Enter UserName" value={userName}
+            onChange={(e) => setUserName(e.currentTarget.value)}
+          />
+          <br />
+          <button type="submit" className="btn btn-light" onClick={handleSubmit} > Search </button>
+          {userFound && (
+            <div id="balance">
+              <h1>Balance</h1>
+              <span>{JSON.stringify(userBalance)}</span>
+            </div>
+          )}
+        </>
+      }
+    />
+  );
 }

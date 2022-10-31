@@ -6,8 +6,8 @@ export const Deposit = () => {
   const [amount, setAmount] = useState(0); // state of this transaction
   const [validTransaction, setValidTransaction] = useState(false);
 
-  let {state, actions} = useContext(UserContext);
-  const user = state.users.find((elem) => elem.email === state.currentUser.email);
+  const {state, actions} = useContext(UserContext);
+  const user = state.users.find(elem => elem.email === state.currentUser);
 
   const handleChange = (event) => {
     if (Number(event.target.value) < 0) {
