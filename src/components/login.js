@@ -1,14 +1,12 @@
 import { useContext, useState } from "react";
-import { UserContext, authContext } from "../state/context";
 import { BankCard } from "./bankcard";
+import { UserContext } from "../state/AppState";
 
 export function Login() {
+  const {state, actions} = useContext(UserContext)
   const [status, setStatus] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const ctx = useContext(UserContext);
-  const {authenticated, setAuthenticated} = useContext(authContext);
 
   function validate(field, label){
     if (!field) {
@@ -23,22 +21,24 @@ export function Login() {
     if (!validate(email,'email')) return;
     if (!validate(password,'password')) return;
 
-    let user = ctx.users.find( element =>  element.email === email)
+    //let user = state.users.find( element =>  element.email === email)
 
-    if (user && user.password === password){
-      console.log(`${user.name} logged in`)
-      setAuthenticated(true);
-      ctx.userLoggedIn = user.email;
-    }
+    //if (user && user.password === password){
+    //  console.log(`${user.name} logged in`)
+      
+      
+    //}
+    actions.logIn({email, password});
   }
 
   return (
+    
     <BankCard
       txtcolor="black"
       header = "Login"
       status={status}
       body =         
-        { !authenticated ? (
+        { state.currentUser == null ? (
           <>
           Email<br/>
           <input type = "input" className="form-control" id="email" placeholder="Enter login" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br/>

@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { authContext } from "./state/context";
+import { UserContext } from "./state/AppState";
 
 export function NavBar() {
-  const { authenticated } = useContext(authContext);
+  const { state } = useContext(UserContext);
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -33,27 +33,26 @@ export function NavBar() {
                 Login
               </a>
             </li>
-            {authenticated && (
+            {state.currentUser && (
               <li className="nav-item">
                 <a className="nav-link" href="#/deposit">
                   Deposit
                 </a>
               </li>
             )}
-            {authenticated && (
+            {state.userAuthenticated && (
               <li className="nav-item">
                 <a className="nav-link" href="#/withdraw">
                   WithDraw
                 </a>
               </li>
             )}
-            {authenticated && (
-              <li className="nav-item">
-                <a className="nav-link" href="#/balance">
-                  Balance
-                </a>
-              </li>
-            )}
+
+            <li className="nav-item">
+              <a className="nav-link" href="#/balance">
+                Balance
+              </a>
+            </li>
 
             <li className="nav-item">
               <a className="nav-link" href="#/allData">

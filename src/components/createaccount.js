@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../state/context";
+import { UserContext } from "../state/AppState";
 import {BankCard} from "./bankcard"
 
 
@@ -10,7 +10,7 @@ export function CreateAccount(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const ctx = useContext(UserContext);
+  const {addUser} = useContext(UserContext);
 
   function validate(field, label){
     if (!field) {
@@ -27,7 +27,7 @@ export function CreateAccount(){
     if (!validate(email,'email')) return;
     if (!validate(password,'password')) return;
 
-    ctx.users.push({name, email, password, balance:100})
+    addUser({name, email, password, balance:150})
     setShow(false)
   }
 
