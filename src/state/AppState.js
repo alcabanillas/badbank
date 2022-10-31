@@ -52,7 +52,7 @@ const actionsDispatcher = (state, dispatch) => {
   const addUser = (userInfo) => {
     let currentUser = state.users.find( elem => elem.email === userInfo.email)
     if (currentUser) {
-      alert("User already exists")
+      alert('User already exists')
       return false;
     }
     dispatch({ type: actions.UPDATE_USERS, payload: [...state.users, userInfo] });
@@ -63,7 +63,7 @@ const actionsDispatcher = (state, dispatch) => {
     let currentUser = state.users.find( elem => elem.email === credentials.email && elem.password === credentials.password)
 
     if (!currentUser) {
-      alert("Invalid credentials")
+      alert('Invalid credentials')
       return false;
     }
 

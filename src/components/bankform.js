@@ -36,7 +36,7 @@ export const BankForm = ({
     setShow(true);
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
     if (fields.every((elem) => validate(elem.name, elem.value))) {
       let data = {};
       inputFields.map((elem) => {
@@ -45,6 +45,7 @@ export const BankForm = ({
       if (handle(data)) {
         setShow(false);
       }
+      event.preventDefault();
     }
   }
 
