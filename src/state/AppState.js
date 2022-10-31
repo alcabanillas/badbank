@@ -49,49 +49,6 @@ function reducer(state, action) {
 }
 
 
-/*function reducer(state, action) {
-  console.log(action.type)
-  switch (action.type) {
-    case actions.ADD_USER: {
-      console.log(`New User: ${action}`)
-      return {
-        ...state,
-        users : [
-        ...state.users,
-        {
-          name: action.userInfo.name,
-          email: action.userInfo.email,
-          password: action.userInfo.password,
-          balance: action.userInfo.balance,
-        }]
-      };
-    }
-    case actions.LOGIN:
-      
-    case actions.LOGOUT:
-      return {
-        ...state,
-        userLoggedIn: null,
-        userAuthenticated : false
-      };
-    case actions.WITHDRAW:
-      return {};
-    case actions.DEPOSIT:
-      console.log(`New deposit: ${action.amount} ${state.userLoggedIn}`)
-      let newUsers = state.users.map( element => {
-        if (element.email === state.userLoggedIn) {
-          element.balance += action.amount;
-        }
-        return element;
-      })
-      return {
-        ...state,
-        users: newUsers
-      };
-    default:
-      return state;
-  }
-}*/
 
 const useActions = (state, dispatch) => {
   const addUser = (userInfo) => {
@@ -151,15 +108,11 @@ const useActions = (state, dispatch) => {
 
 
 
-export const UserProvider = ({ children }) => {
+export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions = useActions(state, dispatch);
 
-  const value = {
-    state,
-    actions
-  };
-
+  const value = { state, actions };
   return (
     <UserContext.Provider value={value}>
       {children}
