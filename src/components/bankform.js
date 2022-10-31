@@ -2,8 +2,6 @@ import { BankCard } from "./bankcard";
 import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { ShowModal } from "./AlertDismissible"
-import { UserContext } from "../state/AppState";
 
 export const BankForm = ({
   bgcolor,
