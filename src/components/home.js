@@ -1,10 +1,6 @@
-import { useContext, useState } from "react";
-import { UserContext } from "../state/AppState";
 import { BankCard } from "./bankcard";
 
 export function Home() {
-  const ctx = useContext(UserContext);
-
   return (
     <div>
       <BankCard

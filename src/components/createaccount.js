@@ -1,44 +1,32 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../state/AppState";
-import {BankCard} from "./bankcard"
+import { BankForm } from "./bankform";
 
 
 export function CreateAccount(){
-  const [show, setShow] = useState(true);
-  const [status, setStatus] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const {actions} = useContext(UserContext);
 
-  function validate(field, label){
-    if (!field) {
-      setStatus(`Error: ${label}`)
-      setTimeout( () => setStatus(''), 3000)
-      return false;
-    }
-    return true;
+  const handleCreate = (data) => {
+    return actions.addUser({name:data.Name, email:data.Email, password:data.Password, balance:100})
   }
 
-  const handleCreate = () => {
-    console.log(name, email, password);
-    if (!validate(name,'name')) return;
-    if (!validate(email,'email')) return;
-    if (!validate(password,'password')) return;
-
-    actions.addUser({name, email, password, balance:150})
-    setShow(false)
-  }
-
-  function clearForm(){
-    setName('')
-    setEmail('')
-    setPassword('')
-    setShow(true)
-  }
+  let formFields = [
+    {name: 'Name', value:'', placeholder: 'Enter name', type: 'input'},
+    {name: 'Email', value:'', placeholder: 'Enter email', type: 'email'},
+    {name: 'Password', value:'', placeholder: 'Enter password', type: 'password'},
+  ]
 
   return (
+    <BankForm 
+      bgcolor="primary"
+      label="Create Account"
+      handle = {handleCreate}
+      fields = {formFields}
+      hideAmount={true}
+      successButton="Add another account" />
+  )
+
+  /*return (
     <BankCard 
       bgcolor="primary"
       header="Create Account"
@@ -60,5 +48,5 @@ export function CreateAccount(){
         </>
       )}
     />
-  )
+  )*/
 }

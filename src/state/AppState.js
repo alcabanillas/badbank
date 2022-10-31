@@ -48,16 +48,15 @@ function reducer(state, action) {
   }
 }
 
-
-
-const useActions = (state, dispatch) => {
+const actionsDispatcher = (state, dispatch) => {
   const addUser = (userInfo) => {
     let currentUser = state.users.find( elem => elem.email === userInfo.email)
     if (currentUser) {
       alert("User already exists")
-      return;
+      return false;
     }
     dispatch({ type: actions.UPDATE_USERS, payload: [...state.users, userInfo] });
+    return true;
   }
 
   const loginUser = (credentials) => {
@@ -65,14 +64,16 @@ const useActions = (state, dispatch) => {
 
     if (!currentUser) {
       alert("Invalid credentials")
-      return;
+      return false;
     }
 
     dispatch({ type: actions.LOGIN, payload: credentials.email })
+    return true;
   }
 
   const logoutUser = () => {
     dispatch({ type: actions.LOGOUT})
+    return true;
   }
 
   const deposit = (amount) => {
@@ -105,12 +106,9 @@ const useActions = (state, dispatch) => {
 
 }
 
-
-
-
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const actions = useActions(state, dispatch);
+  const actions = actionsDispatcher(state, dispatch);
 
   const value = { state, actions };
   return (
