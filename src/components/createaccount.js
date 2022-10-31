@@ -4,7 +4,7 @@ import { BankForm } from "./bankform";
 
 
 export function CreateAccount(){
-  const {actions} = useContext(UserContext);
+  const {state, actions} = useContext(UserContext);
 
   const handleCreate = (data) => {
     return actions.addUser({name:data.Name, email:data.Email, password:data.Password, balance:100})
@@ -23,7 +23,8 @@ export function CreateAccount(){
       handle = {handleCreate}
       fields = {formFields}
       hideAmount={true}
-      successButton="Add another account" />
+      successButton="Add another account" 
+    />
   )
 
   /*return (

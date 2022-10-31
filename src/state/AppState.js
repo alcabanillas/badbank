@@ -6,7 +6,8 @@ const actions = {
   ADD_USER: "ADD_USER",
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
-  UPDATE_USERS: "UPDATE_USERS"
+  UPDATE_USERS: "UPDATE_USERS",
+  SET_ERROR: "SET_ERROR"
 };
 
 const initialState = {
@@ -26,7 +27,8 @@ const initialState = {
   ],
   currentUser: null,
   success: false,
-  showError: false
+  showError: false,
+  errorMessage: ""
 }
 
 function reducer(state, action) {
@@ -41,8 +43,8 @@ function reducer(state, action) {
       return {...state, users: action.payload}
     case "SET_SUCCESS":
       return {...state, success: action.payload}
-    case "SET_ERROR":
-      return {...state, error: action.payload}
+    case actions.SET_ERROR:
+      return {...state, showError: action.payload.showError, errorMessage: action.payload.errorMessage}
     default:
       throw new Error();
   }
@@ -52,23 +54,22 @@ const actionsDispatcher = (state, dispatch) => {
   const addUser = (userInfo) => {
     let currentUser = state.users.find( elem => elem.email === userInfo.email)
     if (currentUser) {
-      alert('User already exists')
-      return false;
+      return { result : false, errorMessage: 'User already exists'};
     }
+
     dispatch({ type: actions.UPDATE_USERS, payload: [...state.users, userInfo] });
-    return true;
+    return {result : true};
   }
 
   const loginUser = (credentials) => {
     let currentUser = state.users.find( elem => elem.email === credentials.email && elem.password === credentials.password)
 
     if (!currentUser) {
-      alert('Invalid credentials')
-      return false;
+      return { result : false, errorMessage: 'Invalid credentials'};
     }
 
     dispatch({ type: actions.LOGIN, payload: credentials.email })
-    return true;
+    return { result : true};
   }
 
   const logoutUser = () => {
@@ -96,12 +97,17 @@ const actionsDispatcher = (state, dispatch) => {
     dispatch({ type: actions.UPDATE_USERS, payload: newUsers })
   }
 
+  const clearError = () => {
+    dispatch({type: actions.SET_ERROR, payload : {showError:false, errorMessage: ''}})
+  }
+
   return {
     addUser,
     loginUser,
     logoutUser,
     withDraw,
-    deposit
+    deposit,
+    clearError
   }
 
 }

@@ -12,7 +12,9 @@ import { AllData } from "./components/alldata";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 
+
 function App() {
+
   return (
     <HashRouter>
       <NavBar />

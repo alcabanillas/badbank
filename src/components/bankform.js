@@ -1,7 +1,9 @@
 import { BankCard } from "./bankcard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { ShowModal } from "./AlertDismissible"
+import { UserContext } from "../state/AppState";
 
 export const BankForm = ({
   bgcolor,
@@ -42,8 +44,13 @@ export const BankForm = ({
       inputFields.map((elem) => {
         data[elem.name] = elem.value;
       });
-      if (handle(data)) {
+
+      const {result, errorMessage} = handle(data);
+
+      if (result) {
         setShow(false);
+      } else {
+        alert(errorMessage)
       }
       event.preventDefault();
     }
