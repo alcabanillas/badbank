@@ -1,3 +1,4 @@
+import { NavBar } from "../routes/navbar";
 import { BankCard } from "./bankcard";
 
 export function Home() {

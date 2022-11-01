@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { UserContext } from "../state/AppState";
+import { UsersContext } from "../state/AppState";
 
 export function AllData() {
-  const { state } = useContext(UserContext);
+  const { usersState } = useContext(UsersContext);
   return (
     <table className="table">
       <thead>
@@ -14,7 +14,7 @@ export function AllData() {
         </tr>
       </thead>
       <tbody>
-        {state.users.map((element) => {
+        {usersState.users.map((element) => {
           return (
             <tr>
               <td>{element.email}</td>

@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../state/AppState";
+import { UsersContext } from "../state/AppState";
 import { BankCard } from "./bankcard";
 
 export function Balance() {
   //Check the balance of any one user by their given email
   const [userName, setUserName] = useState("");
-  const { state } = useContext(UserContext);
+  const { usersState } = useContext(UsersContext);
   const [userFound, setUserFound] = useState(false);
   const [userBalance, setUserBalance] = useState(null);
 
   const handleSubmit = () => {
-    let newUser = state.users.find((elem) => elem.email === userName);
+    let newUser = usersState.users.find((elem) => elem.email === userName);
 
     if (newUser) {
       setUserBalance(newUser);

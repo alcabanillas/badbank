@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../state/AppState";
+import { UsersContext } from "../state/AppState";
 import { ATMDeposit } from "./ATMDeposit";
 
 export const Deposit = () => {
   const [amount, setAmount] = useState(0); // state of this transaction
   const [validTransaction, setValidTransaction] = useState(false);
 
-  const {state, actions} = useContext(UserContext);
-  const user = state.users.find(elem => elem.email === state.currentUser);
+  const {usersState, actions} = useContext(UsersContext);
+  const user = usersState.users.find(elem => elem.email === usersState.currentUser);
 
   const handleChange = (event) => {
     if (Number(event.target.value) < 0) {
@@ -26,7 +26,7 @@ export const Deposit = () => {
 
   return (
     <form onSubmit={handleSubmit} className="container overflow-hidden">
-      {JSON.stringify(state)}
+      {JSON.stringify(usersState)}
       <div className="row text-center">
         <h2 className="col" id="total">
           Balance ${user.balance}

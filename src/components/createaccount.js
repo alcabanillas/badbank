@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../state/AppState";
+import { UsersContext } from "../state/AppState";
 import { BankForm } from "./bankform";
 
 
 export function CreateAccount(){
-  const {state, actions} = useContext(UserContext);
+  const {usersState, actions} = useContext(UsersContext);
 
   const handleCreate = (data) => {
     return actions.addUser({name:data.Name, email:data.Email, password:data.Password, balance:100})

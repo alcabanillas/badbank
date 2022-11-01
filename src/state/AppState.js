@@ -1,6 +1,6 @@
 import React, {useReducer, createContext} from "react";
 //Context and Provider
-export const UserContext = createContext();
+export const UsersContext = createContext();
 
 const actions = {
   ADD_USER: "ADD_USER",
@@ -61,7 +61,7 @@ const actionsDispatcher = (state, dispatch) => {
     return {result : true};
   }
 
-  const loginUser = (credentials) => {
+  const login = (credentials) => {
     let currentUser = state.users.find( elem => elem.email === credentials.email && elem.password === credentials.password)
 
     if (!currentUser) {
@@ -72,7 +72,7 @@ const actionsDispatcher = (state, dispatch) => {
     return { result : true};
   }
 
-  const logoutUser = () => {
+  const logout = () => {
     dispatch({ type: actions.LOGOUT})
     return true;
   }
@@ -103,8 +103,8 @@ const actionsDispatcher = (state, dispatch) => {
 
   return {
     addUser,
-    loginUser,
-    logoutUser,
+    login,
+    logout,
     withDraw,
     deposit,
     clearError
@@ -113,13 +113,13 @@ const actionsDispatcher = (state, dispatch) => {
 }
 
 export const ContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const actions = actionsDispatcher(state, dispatch);
+  const [usersState, dispatch] = useReducer(reducer, initialState);
+  const actions = actionsDispatcher(usersState, dispatch);
 
-  const value = { state, actions };
+  const value = { usersState, actions };
   return (
-    <UserContext.Provider value={value}>
+    <UsersContext.Provider value={value}>
       {children}
-    </UserContext.Provider>
+    </UsersContext.Provider>
   );
 };
