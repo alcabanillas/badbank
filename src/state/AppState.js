@@ -50,7 +50,7 @@ function reducer(state, action) {
   }
 }
 
-const actionsDispatcher = (state, dispatch) => {
+const useActions = (state, dispatch) => {
   const addUser = (userInfo) => {
     let currentUser = state.users.find( elem => elem.email === userInfo.email)
     if (currentUser) {
@@ -112,14 +112,14 @@ const actionsDispatcher = (state, dispatch) => {
 
 }
 
-export const ContextProvider = ({ children }) => {
+export const ContextProvider = (props) => {
   const [usersState, dispatch] = useReducer(reducer, initialState);
-  const actions = actionsDispatcher(usersState, dispatch);
-
+  const actions = useActions(usersState, dispatch);
   const value = { usersState, actions };
+
   return (
     <UsersContext.Provider value={value}>
-      {children}
+      {props.children}
     </UsersContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import { NavBar } from "./routes/navbar";
 import { Home } from "./components/home";
 import { CreateAccount } from "./components/createaccount";
@@ -15,8 +15,8 @@ import "bootstrap/dist/js/bootstrap";
 function App() {
   return (
     <Router>
+      <div className="container-fluid">
       <NavBar />
-      <div className="container">
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
           <Route path="createaccount" element={<CreateAccount />}></Route>

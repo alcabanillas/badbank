@@ -1,54 +1,84 @@
 import { useContext, useState } from "react";
-import { BankCard } from "./bankcard";
 import { UsersContext } from "../state/AppState";
-import { Navigate } from "react-router-dom";
-
+import { BankForm } from "./bankform";
+import { BankCard } from "./bankcard";
 
 export function Login() {
-  const {usersState, actions} = useContext(UsersContext)
-  const [status, setStatus] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { usersState, actions } = useContext(UsersContext);
 
-  function validate(field, label){
-    if (!field) {
-      setStatus(`Error: ${label}`)
-      setTimeout( () => setStatus(''), 3000)
-      return false;
-    }
-    return true;
+  const validateEmail = (email) => {
+    if (!email) return { Email: "Field required" };
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
+      return { Email: "Username should be and email" };
+    return {};
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return { Password: "Field required" };
+    return {};
+  };
+
+  const validateFields = (values) => {
+    console.log(JSON.stringify(values));
+    let errors = {};
+
+    errors = { ...validateEmail(values.Email) };
+    errors = { ...errors, ...validatePassword(values.Password) };
+
+    return errors;
+  };
+
+  let formFields = [
+    { id: "Email", placeholder: "Enter email", type: "email" },
+    { id: "Password", placeholder: "Enter password", type: "password" },
+  ];
+
+  let initialValues = {
+    Email: "",
+    Password: "",
+  };
+
+  function handleCreate(data) {
+    console.log(JSON.stringify(data));
+    return actions.login({ email: data.Email, password: data.Password });
   }
 
-  function handleLogin(){
-    if (!validate(email,'email')) return;
-    if (!validate(password,'password')) return;
-
-    const {result, errorMessage} = actions.login({email, password});
-
-    if (!result) alert(errorMessage)
-  }
-
-  function handleLogout(){
+  function handleLogout() {
     actions.logout();
   }
 
+  const renderLoginForm = () => {
+    return (
+      <BankForm
+        bgcolor="primary"
+        label="Login"
+        handle={handleCreate}
+        validateFields={validateFields}
+        fields={formFields}
+        initialValues={initialValues}
+        hideAmount={true}
+        successButton="Logout"
+      />
+    );
+  };
+
+  const renderLogoutForm = () => {
+    return (
+      <>
+        <h5>User logged in</h5>
+        <div>Welcome {usersState.currentUser}</div>
+      </>
+    );
+  };
+
   return (
-    
     <BankCard
       txtcolor="black"
-      header = "Login"
-      status={status}
-      body =         
-        { !usersState.currentUser ? (
-          <>
-          Email<br/>
-          <input type = "input" className="form-control" id="email" placeholder="Enter login" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br/>
-          Password <br/>
-          <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)}></input><br/>
-          <button type="submit" className="btn btn-light" onClick={handleLogin}>Login</button>
-          </>
-          ) : (<Navigate to="/" replace={true} />)
-        }
+      header="Login"
+      body={!usersState.currentUser ? 
+          renderLoginForm() : 
+          renderLogoutForm()
+      }
     />
   );
 }

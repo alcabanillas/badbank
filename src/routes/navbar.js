@@ -7,7 +7,7 @@ export function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="/#">
           BadBank
         </a>
         <button
@@ -24,44 +24,44 @@ export function NavBar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/CreateAccount/">
+              <a className="nav-link" href="#/CreateAccount/">
                 Create Account
               </a>
             </li>
             {usersState.currentUser && (
               <li className="nav-item">
-                <a className="nav-link" href="/deposit">
+                <a className="nav-link" href="#/deposit">
                   Deposit
                 </a>
               </li>
             )}
             {usersState.currentUser && (
               <li className="nav-item">
-                <a className="nav-link" href="/withdraw">
+                <a className="nav-link" href="#/withdraw">
                   WithDraw
                 </a>
               </li>
             )}
 
             <li className="nav-item">
-              <a className="nav-link" href="/balance">
+              <a className="nav-link" href="#/balance">
                 Balance
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/allData">
+              <a className="nav-link" href="#/allData">
                 AllData
               </a>
             </li>
             {!usersState.currentUser ? (
               <li className="nav-item">
-                <a className="nav-link" href="/login">
+                <a className="nav-link" href="#/login">
                   Login
                 </a>
               </li>
             ) : (
-              <a className="nav-link" href="#" onClick={ (e) => {e.preventDefault(); actions.logout()}}>
+              <a className="nav-link" href="/#" onClick={ (e) => {e.preventDefault(); actions.logout()}}>
                 Logout
               </a>
             )}
