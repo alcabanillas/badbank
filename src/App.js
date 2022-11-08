@@ -15,8 +15,8 @@ import "bootstrap/dist/js/bootstrap";
 function App() {
   return (
     <Router>
+      <NavBar  />
       <div className="container-fluid">
-      <NavBar />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
           <Route path="createaccount" element={<CreateAccount />}></Route>
