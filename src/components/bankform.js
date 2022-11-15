@@ -17,22 +17,24 @@ export const BankForm = ({
   const [show, setShow] = useState(true);
 
   function clearForm() {
-    formik.resetForm();
+    formik.resetForm({values : ''});
     setShow(true);
   }
 
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
-      if (!formik.isValidating && formik.isSubmitting) {
+      console.log(`OnSubmit: isValid=${formik.isValid} isSubmitting=${formik.isSubmitting}`)
+      //if (!formik.isValidating && formik.isSubmitting) {
+      
         const { result, errorMessage } = handle(values);
 
         if (result) {
-          setShow(false);
+          clearForm();
         } else {
           alert(errorMessage);
         }
-      }
+      //}
     },
     validate: (values) => {
       return validateFields(values);
@@ -44,11 +46,11 @@ export const BankForm = ({
       {fields.map((elem, index) => {
         return (
           <Form.Group className="mb-3" key={index}>
-            <Form.Label>{elem.id}</Form.Label>
+            <Form.Label htmlFor={elem.id}>{elem.id}</Form.Label>
             <Form.Control
               type={elem.type}
               key={index}
-              name={elem.id}
+              id={elem.id}
               onChange={formik.handleChange}
               placeholder={elem.placeholder}
             />
@@ -60,7 +62,7 @@ export const BankForm = ({
           </Form.Group>
         );
       })}
-      <Button type="submit" className="btn btn-light">
+      <Button type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
         {label}
       </Button>
     </Form>

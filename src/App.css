@@ -1,6 +1,14 @@
 
 
-.nav-link.active {
-  color: #F05742 !important; 
+/*.nav-link:hover {
+  border-bottom: 3px solid #18bc9c;
+}*/
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
+.home {
+}

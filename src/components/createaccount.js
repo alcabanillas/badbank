@@ -8,12 +8,17 @@ export function CreateAccount() {
   const [show, setShow ] = useState(true)
 
   const handleCreate = (data) => {
-    return actions.addUser({
+    console.log(`Handle create`)
+
+    const {result, errorMessage} = actions.addUser({
       name: data.Name,
       email: data.Email,
       password: data.Password,
       balance: 100,
     });
+
+    if (result) setShow(false)
+    return {result, errorMessage};
   };
 
   let formFields = [
@@ -60,6 +65,7 @@ export function CreateAccount() {
   }
 
   const renderCreateAccountForm = () => {
+    console.log('renderCreateAccountForm');
     return (
       <BankForm
         bgcolor="primary"
@@ -85,6 +91,7 @@ export function CreateAccount() {
   };
 
   console.log(`Status: ${show}`)
+
   return (
     <BankCard
       bgcolor="primary"
