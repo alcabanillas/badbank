@@ -2,10 +2,19 @@ import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankForm } from "./bankform";
 import { BankCard } from "./bankcard";
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 export function CreateAccount() {
   const { actions } = useContext(UsersContext);
   const [show, setShow ] = useState(true)
+  const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
+
+  const toggleShowToast = () => {
+    setToastProps({...toastProps, showToast : false});
+  }
+
+  console.log(JSON.stringify(toastProps));
 
   const handleCreate = (data) => {
     console.log(`Handle create`)
@@ -17,7 +26,13 @@ export function CreateAccount() {
       balance: 100,
     });
 
-    if (result) setShow(false)
+    if (result) {
+      setShow(false)
+      setToastProps({showToast: true, text: 'Account successfully created', type: 'success'})
+    } else {
+      setToastProps({showToast: true, text: errorMessage, type: 'error'})
+    }
+
     return {result, errorMessage};
   };
 
@@ -65,7 +80,7 @@ export function CreateAccount() {
   }
 
   const renderCreateAccountForm = () => {
-    console.log('renderCreateAccountForm');
+
     return (
       <BankForm
         bgcolor="primary"
@@ -92,11 +107,53 @@ export function CreateAccount() {
 
   console.log(`Status: ${show}`)
 
+  function CustomToast({show, toggleShow, header, text, type}) {
+    debugger
+
+    let background = 'Secondary';
+    let icon = 'bi bi-info-circle';
+
+    switch (type) {
+      case 'success':
+        background = 'success';
+        icon = 'bi bi-check-circle';
+        break;
+      case 'error':
+        background = 'danger';
+        icon = 'bi bi-exclamation-circle';
+        break
+      case 'info':
+        background = 'Warning';
+        icon = 'bi bi-exclamation-triangle';
+        break
+      default:
+        break;
+    }
+
+    return (
+      <ToastContainer className="p-3" position="top-end">
+      <Toast className="d-inline-block m-1" bg={background.toLowerCase()} show={show} role="alert" onClose={toggleShow} delay={3000} autohide>
+        <Toast.Header>
+          <i className={icon}></i>
+          &nbsp;
+          <strong className="me-auto">{header}</strong>
+        </Toast.Header>
+        <Toast.Body>{text}</Toast.Body>
+      </Toast>
+    </ToastContainer>
+  );
+  }
+  
+
   return (
-    <BankCard
-      bgcolor="primary"
-      header="Create account"
-      body={show ? renderCreateAccountForm() : renderNewAccount()}
-    />
+    <>
+      <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>
+      <BankCard 
+        bgcolor="primary"
+        header="Create account"
+        body={show ? renderCreateAccountForm() : renderNewAccount()}
+      />
+      
+    </>
   );
 }

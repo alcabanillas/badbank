@@ -25,8 +25,8 @@ export const Deposit = () => {
   };
 
   return (
+    usersState.currentUser ? (
     <form onSubmit={handleSubmit} className="container overflow-hidden">
-      {JSON.stringify(usersState)}
       <div className="row text-center">
         <h2 className="col" id="total">
           Balance ${user.balance}
@@ -34,6 +34,6 @@ export const Deposit = () => {
       </div>
 
       <ATMDeposit onChange={handleChange} isValid={validTransaction} />
-    </form>
+    </form>):(<div>You must be logged in to use this function</div>)
   );
 };

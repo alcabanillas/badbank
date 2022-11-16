@@ -25,16 +25,12 @@ export const BankForm = ({
     initialValues: initialValues,
     onSubmit: (values) => {
       console.log(`OnSubmit: isValid=${formik.isValid} isSubmitting=${formik.isSubmitting}`)
-      //if (!formik.isValidating && formik.isSubmitting) {
       
-        const { result, errorMessage } = handle(values);
+      const { result, errorMessage } = handle(values);
 
-        if (result) {
-          clearForm();
-        } else {
-          alert(errorMessage);
-        }
-      //}
+      if (result) {
+        clearForm();
+      } 
     },
     validate: (values) => {
       return validateFields(values);

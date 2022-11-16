@@ -81,11 +81,10 @@ export function NavBar() {
                 </CustomTooltip>
             ) : ( 
               <CustomTooltip text="Log out" tooltipId="logout">
-              <a className="nav-link" href="/#" onClick={(e) => { 
-                  e.preventDefault();
+              <NavLink className="nav-link" to="/" onClick={(e) => { 
                   actions.logout();}}>
                 Logout
-              </a>
+              </NavLink>
               </CustomTooltip>
             )}
             </li>            

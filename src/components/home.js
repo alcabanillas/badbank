@@ -1,22 +1,24 @@
 import { BankCard } from "./bankcard";
 
-/*export function Home() {
+export function Home() {
+  const setHomeText = () => <p>Welcome to the most unsafe bank in the world. Because not everything is about the money... <i className="bi bi-coin"></i></p>
+
   return (
-    <div className="home">
+    <div className="card-container home">
       <BankCard
         txtcolor="black"
         header="BadBank Landing Module"
         title="Welcome to the bank"
-        text="You can use this bank."
+        text= {setHomeText()}
         body={
-          <img src="home.png" className="img-fluid" alt="Responsive image" />
+          <img src="/images/home.png" className="card-img-top" alt="Responsive image" />
         }
       />
     </div>
   );
 }
-*/
 
+/*
 const customStyles = {
   width: "20rem",
   padding: "10px",
@@ -27,14 +29,15 @@ export function Home() {
   return (
     <div className="card-container home">
       <div className="card" style={customStyles}>
+      <div className="card-body">
         <h5 className="card-title">Welcome to the bank</h5>
         <img src="/images/home.png" className="card-img-top" alt="..." />
-        <div className="card-body">
           <p className="card-text">
-            Welcome to the most unsafe bank in the world. Because not everything is about the money...
+            Welcome to the most unsafe bank in the world. Because not everything is about the money... <i class="bi bi-coin"></i>
           </p>
         </div>
       </div>
     </div>
   );
 }
+*/
