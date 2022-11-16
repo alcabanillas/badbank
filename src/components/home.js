@@ -11,7 +11,7 @@ export function Home() {
         title="Welcome to the bank"
         text= {setHomeText()}
         body={
-          <img src="/images/home.png" className="card-img-top" alt="Responsive image" />
+          <img src="/images/home.png" className="card-img-top" alt="..." />
         }
       />
     </div>

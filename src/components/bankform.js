@@ -1,5 +1,3 @@
-import { BankCard } from "./bankcard";
-import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
@@ -14,11 +12,9 @@ export const BankForm = ({
   hideAmount,
   successButton,
 }) => {
-  const [show, setShow] = useState(true);
 
   function clearForm() {
     formik.resetForm({values : ''});
-    setShow(true);
   }
 
   const formik = useFormik({
@@ -26,7 +22,7 @@ export const BankForm = ({
     onSubmit: (values) => {
       console.log(`OnSubmit: isValid=${formik.isValid} isSubmitting=${formik.isSubmitting}`)
       
-      const { result, errorMessage } = handle(values);
+      const { result } = handle(values);
 
       if (result) {
         clearForm();
