@@ -1,17 +1,16 @@
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
 export const BankForm = ({
-  bgcolor,
   label,
   handle,
   fields,
   validateFields,
   initialValues,
-  hideAmount,
-  successButton,
 }) => {
+  const [valid, setValid] = useState(false);
 
   function clearForm() {
     formik.resetForm({values : ''});
@@ -32,6 +31,24 @@ export const BankForm = ({
       return validateFields(values);
     },
   });
+
+
+//Listen for Form inputs
+useEffect(() => {
+  const fields = formik.values;
+  console.log(JSON.stringify(fields))
+
+  let validFields = true;
+
+  for (const key of Object.keys(fields)) {
+    const val = fields[key];
+    if (val.trim().length== 0) validFields = false;
+    // use val
+  } 
+  console.log(`set valid =${validFields}`)
+  setValid(validFields);
+  
+}, [formik.values]);  
 
   return (
     <Form className="mb-3" onSubmit={formik.handleSubmit}>
@@ -54,7 +71,7 @@ export const BankForm = ({
           </Form.Group>
         );
       })}
-      <Button type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
+      <Button disabled={!valid} type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
         {label}
       </Button>
     </Form>

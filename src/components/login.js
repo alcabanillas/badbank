@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankForm } from "./bankform";
 import { BankCard } from "./bankcard";
@@ -41,10 +41,6 @@ export function Login() {
   function handleCreate(data) {
     console.log(JSON.stringify(data));
     return actions.login({ email: data.Email, password: data.Password });
-  }
-
-  function handleLogout() {
-    actions.logout();
   }
 
   const renderLoginForm = () => {

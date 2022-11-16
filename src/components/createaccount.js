@@ -83,7 +83,6 @@ export function CreateAccount() {
 
     return (
       <BankForm
-        bgcolor="primary"
         label="Create Account"
         handle={handleCreate}
         validateFields={validateFields}
@@ -105,10 +104,7 @@ export function CreateAccount() {
     );
   };
 
-  console.log(`Status: ${show}`)
-
   function CustomToast({show, toggleShow, header, text, type}) {
-    debugger
 
     let background = 'Secondary';
     let icon = 'bi bi-info-circle';
@@ -146,14 +142,14 @@ export function CreateAccount() {
   
 
   return (
-    <>
+    <div className="createAccount">
       <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>
       <BankCard 
-        bgcolor="primary"
+        txtcolor="black"
         header="Create account"
         body={show ? renderCreateAccountForm() : renderNewAccount()}
       />
       
-    </>
+    </div>
   );
 }
