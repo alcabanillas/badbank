@@ -62,6 +62,7 @@ export function CreateAccount() {
 
   const validatePassword = (password) => {
     if (!password) return { Password: "Field required" };
+    if (password.length < 8) return { Password: "Password must have at least 8 chars"}
     return {};
   };
 
@@ -95,12 +96,14 @@ export function CreateAccount() {
 
   const renderNewAccount = () => {
     return (
-      <>
+      <div className="create-account">
         <h5>Success</h5>
+        <div className="">
         <button type="submit" className="btn btn-light" onClick={ () => clearForm()}>
         Add another account
         </button>
-      </>
+        </div>
+      </div>
     );
   };
 
@@ -142,7 +145,7 @@ export function CreateAccount() {
   
 
   return (
-    <div className="createAccount">
+    <div className="card-container create-account">
       <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>
       <BankCard 
         txtcolor="black"

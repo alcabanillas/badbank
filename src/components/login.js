@@ -60,15 +60,17 @@ export function Login() {
 
   const renderLogoutForm = () => {
     return (
-      <>
+      <div className="card-container logout">
         <h5>User logged in</h5>
         <div>Welcome {usersState.currentUser}</div>
-      </>
+      </div>
     );
   };
 
   return (
+    <div className="card-container login">
     <BankCard
+      width="15rem"
       txtcolor="black"
       header="Login"
       body={!usersState.currentUser ? 
@@ -76,5 +78,6 @@ export function Login() {
           renderLogoutForm()
       }
     />
+    </div>
   );
 }

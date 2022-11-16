@@ -5,8 +5,12 @@ export function BankCard(props) {
     return "card mt-3 " + bg + txt;
   }
 
+  function width(){
+    return {"width" : props.width ?  props.width : "25rem"};
+  }
+
   return (
-    <div className={classes()} style={{ maxWidth: "18rem" }}>
+    <div className={classes()} style={ width()}>
       <div className="card-header">{props.header}</div>
       <div className="card-body">
         {props.title && <h5 className="card-title">{props.title}</h5>}

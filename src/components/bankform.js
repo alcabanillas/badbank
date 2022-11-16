@@ -38,17 +38,21 @@ useEffect(() => {
   const fields = formik.values;
   console.log(JSON.stringify(fields))
 
-  let validFields = true;
+  if (formik.isValid) {
+    let validFields = true;
 
-  for (const key of Object.keys(fields)) {
-    const val = fields[key];
-    if (val.trim().length== 0) validFields = false;
-    // use val
-  } 
-  console.log(`set valid =${validFields}`)
-  setValid(validFields);
+    for (const key of Object.keys(fields)) {
+      const val = fields[key];
+      if (val.trim().length === 0) validFields = false;
+      // use val
+    } 
   
-}, [formik.values]);  
+    setValid(validFields);
+  }else {
+    setValid(false);
+  }
+  
+}, [formik.values, formik.isValid]);  
 
   return (
     <Form className="mb-3" onSubmit={formik.handleSubmit}>
@@ -71,9 +75,11 @@ useEffect(() => {
           </Form.Group>
         );
       })}
-      <Button disabled={!valid} type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
-        {label}
-      </Button>
+      <div className="center">
+        <Button disabled={!valid} type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
+          {label}
+        </Button>
+      </div>
     </Form>
   );
 };
