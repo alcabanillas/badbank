@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { ATMDeposit } from "./ATMDeposit";
+import { ATMDeposit } from "../components/ATMDeposit";
 
 export const WithDraw = () => {
   const [amount, setAmount] = useState(0); // state of this transaction

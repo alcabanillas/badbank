@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { BankForm } from "./bankform";
-import { BankCard } from "./bankcard";
+import { BankForm } from "../components/bankform";
+import { BankCard } from "../components/bankcard";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 

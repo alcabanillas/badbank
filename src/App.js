@@ -25,7 +25,6 @@ function App() {
             <Route path="login" element={<Login />}></Route>
             <Route path="deposit" element={<Deposit />}></Route>
             <Route path="withdraw" element={<WithDraw />}></Route>
-            <Route path="balance" element={<Balance />}></Route>
             <Route path="alldata" element={<AllData />}></Route>
           </Routes>
         </div>

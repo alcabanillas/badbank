@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 export function NavBar() {
@@ -81,8 +81,7 @@ export function NavBar() {
                 </CustomTooltip>
             ) : ( 
               <CustomTooltip text="Log out" tooltipId="logout">
-              <NavLink className="nav-link" to="/" onClick={(e) => { 
-                  actions.logout();}}>
+              <NavLink className="nav-link" to="/login" end onClick={(e) => {actions.logout(); Navigate({to:'/'})}}>
                 Logout
               </NavLink>
               </CustomTooltip>

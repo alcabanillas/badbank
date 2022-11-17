@@ -1,4 +1,4 @@
-import { BankCard } from "./bankcard";
+import { BankCard } from "../components/bankcard";
 
 export function Home() {
   const setHomeText = () => <p>Welcome to the most unsafe bank in the world. Because not everything is about the money... <i className="bi bi-coin"></i></p>

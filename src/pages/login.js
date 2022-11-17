@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
-import { BankForm } from "./bankform";
-import { BankCard } from "./bankcard";
+import { BankForm } from "../components/bankform";
+import { BankCard } from "../components/bankcard";
 
 export function Login() {
   const { usersState, actions } = useContext(UsersContext);
