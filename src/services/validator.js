@@ -1,10 +1,12 @@
 export const validateAmount = (value) => {
   if (!value) return { Amount: "Field required" };
 
-  const regEx = /^\d+(\.\d{1,2})?$/g;
+  const regEx = /^-?\d+(\.\d{1,2})?$/g;
   let isValid = regEx.test(value);
   if (!isValid)
     return { Amount: "Amount must be a valid number" };
+  if (Number(value) <= 0)
+    return { Amount: "Amount must be a positive number"};
   return {};
 }
 

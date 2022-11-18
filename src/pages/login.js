@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankForm } from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 import { validateEmail } from "../services/validator";
+import { CustomToast } from "../components/customtoast";
 
 export function Login() {
   const { usersState, actions } = useContext(UsersContext);
+  const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
 
   const validatePassword = (password) => {
     if (!password) return { Password: "Field required" };
@@ -21,6 +23,10 @@ export function Login() {
     return errors;
   };
 
+  const toggleShowToast = () => {
+    setToastProps({...toastProps, showToast : false});
+  }
+
   let formFields = [
     { id: "Email", placeholder: "Enter email", type: "email" },
     { id: "Password", placeholder: "Enter password", type: "password" },
@@ -32,7 +38,14 @@ export function Login() {
   };
 
   function handleLogin(data) {
-    return actions.login({ email: data.Email, password: data.Password });
+    const {result, errorMessage} = actions.login({ email: data.Email, password: data.Password });
+
+    if (result) {
+      setToastProps({showToast: true, text: 'User logged in', type: 'success'})
+    }
+    else {
+      setToastProps({showToast: true, text: errorMessage, type: 'error'})      
+    }
   }
 
   const renderLoginForm = () => {
@@ -60,15 +73,15 @@ export function Login() {
 
   return (
     <div className="card-container login">
-    <BankCard
-      width="20rem"
-      txtcolor="black"
-      header="Login"
-      body={!usersState.currentUser ? 
-          renderLoginForm() : 
-          renderLogoutForm()
-      }
-    />
+      <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>      
+      <BankCard
+        width="20rem"
+        txtcolor="black"
+        header="Login"
+        body={!usersState.currentUser ? 
+            renderLoginForm() : 
+            renderLogoutForm()
+        }/>
     </div>
   );
 }

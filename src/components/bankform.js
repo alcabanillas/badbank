@@ -73,7 +73,7 @@ useEffect(() => {
           </Form.Group>
         );
       })}
-      <div className="center">
+      <div className="text-center">
         <Button disabled={!valid} type="submit" className="btn btn-primary" data-testid={`btn${label.replace(' ','')}`}>
           {label}
         </Button>
