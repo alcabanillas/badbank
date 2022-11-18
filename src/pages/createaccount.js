@@ -3,6 +3,7 @@ import { UsersContext } from "../state/AppState";
 import { BankForm } from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 import { CustomToast } from "../components/customtoast";
+import { validateEmail } from "../services/validator";
 
 
 export function CreateAccount() {
@@ -47,13 +48,6 @@ export function CreateAccount() {
 
   const validateName = (data) => {
     if (!data) return { Name: "Field required" };
-    return {};
-  };
-
-  const validateEmail = (email) => {
-    if (!email) return { Email: "Field required" };
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
-      return { Email: "Username should be and email" };
     return {};
   };
 

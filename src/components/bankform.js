@@ -13,7 +13,7 @@ export const BankForm = ({
   const [valid, setValid] = useState(false);
 
   function clearForm() {
-    formik.resetForm({values : ''});
+    formik.resetForm();
   }
 
   const formik = useFormik({
@@ -43,11 +43,10 @@ useEffect(() => {
     for (const key of Object.keys(fields)) {
       const val = fields[key];
       if (val.trim().length === 0) validFields = false;
-      // use val
     } 
-  
     setValid(validFields);
-  }else {
+  }
+  else {
     setValid(false);
   }
   
@@ -67,7 +66,7 @@ useEffect(() => {
               placeholder={elem.placeholder}
             />
             {formik.errors[elem.id] ? (
-              <div id={`error${elem.id}`} style={{ color: "red" }}>
+              <div id={`error${elem.id}`} className={"errorField mt-2"}>
                 {formik.errors[elem.id]}
               </div>
             ) : null}
@@ -75,7 +74,7 @@ useEffect(() => {
         );
       })}
       <div className="center">
-        <Button disabled={!valid} type="submit" className="btn btn-light" data-testid={`btn${label.replace(' ','')}`}>
+        <Button disabled={!valid} type="submit" className="btn btn-primary" data-testid={`btn${label.replace(' ','')}`}>
           {label}
         </Button>
       </div>

@@ -2,16 +2,10 @@ import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankForm } from "../components/bankform";
 import { BankCard } from "../components/bankcard";
+import { validateEmail } from "../services/validator";
 
 export function Login() {
   const { usersState, actions } = useContext(UsersContext);
-
-  const validateEmail = (email) => {
-    if (!email) return { Email: "Field required" };
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
-      return { Email: "Username should be and email" };
-    return {};
-  };
 
   const validatePassword = (password) => {
     if (!password) return { Password: "Field required" };

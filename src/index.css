@@ -28,4 +28,8 @@ code {
   gap: 15px;
 }
 
+.errorField{
+  color: red;
+}
+
 

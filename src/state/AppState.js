@@ -80,21 +80,30 @@ const useActions = (state, dispatch) => {
   const deposit = (amount) => {
     let newUsers = state.users.map( element => {
       if (element.email === state.currentUser) {
-        element.balance += amount;
+        element.balance = Math.round(((element.balance + amount) + Number.EPSILON) * 100) / 100
       }
       return element;
     })
     dispatch({ type: actions.UPDATE_USERS, payload: newUsers })
+    return {result : true};
   }
 
   const withDraw = (amount) => {
+    let currentUser = state.users.find( elem => elem.email === state.currentUser)
+
+    if (currentUser.balance < amount) {
+      return {result : false, errorMessage: 'Not enough funds'}
+    }
+
     let newUsers = state.users.map( element => {
       if (element.email === state.currentUser) {
-        element.balance -= amount;
+        element.balance = Math.round(((element.balance - amount) + Number.EPSILON) * 100) / 100
       }
       return element;
     })
     dispatch({ type: actions.UPDATE_USERS, payload: newUsers })
+
+    return {result : true};
   }
 
   const clearError = () => {
