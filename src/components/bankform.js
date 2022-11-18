@@ -36,7 +36,6 @@ export const BankForm = ({
 //Listen for Form inputs
 useEffect(() => {
   const fields = formik.values;
-  console.log(JSON.stringify(fields))
 
   if (formik.isValid) {
     let validFields = true;

@@ -19,7 +19,6 @@ export function Login() {
   };
 
   const validateFields = (values) => {
-    console.log(JSON.stringify(values));
     let errors = {};
 
     errors = { ...validateEmail(values.Email) };
@@ -38,8 +37,7 @@ export function Login() {
     Password: "",
   };
 
-  function handleCreate(data) {
-    console.log(JSON.stringify(data));
+  function handleLogin(data) {
     return actions.login({ email: data.Email, password: data.Password });
   }
 
@@ -48,11 +46,10 @@ export function Login() {
       <BankForm
         bgcolor="primary"
         label="Login"
-        handle={handleCreate}
+        handle={handleLogin}
         validateFields={validateFields}
         fields={formFields}
         initialValues={initialValues}
-        hideAmount={true}
         successButton="Logout"
       />
     );
@@ -70,7 +67,7 @@ export function Login() {
   return (
     <div className="card-container login">
     <BankCard
-      width="15rem"
+      width="20rem"
       txtcolor="black"
       header="Login"
       body={!usersState.currentUser ? 
