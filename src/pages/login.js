@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
 import  BankForm  from "../components/bankform";
 import { BankCard } from "../components/bankcard";
-import { validateEmail } from "../services/validator";
 import { CustomToast } from "../components/customtoast";
 import * as yup from "yup";
 
