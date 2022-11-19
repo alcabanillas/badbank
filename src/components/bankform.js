@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 export const BankForm = ({
-  label,
+  buttonSubmit,
   handle,
   fields,
   validateFields,
@@ -74,8 +74,8 @@ useEffect(() => {
         );
       })}
       <div className="text-center">
-        <Button disabled={!valid} type="submit" className="btn btn-primary" data-testid={`btn${label.replace(' ','')}`}>
-          {label}
+        <Button disabled={!valid} type="submit" className="btn btn-primary" data-testid={`btn${buttonSubmit.replace(' ','')}`}>
+          {buttonSubmit}
         </Button>
       </div>
     </Form>

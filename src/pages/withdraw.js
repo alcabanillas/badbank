@@ -51,7 +51,7 @@ export const WithDraw = () => {
   const renderWithDrawForm = () => {
     return (
       <BankForm
-        label="WithDraw"
+        buttonSubmit="WithDraw"
         handle={handleSubmit}
         validateFields={validateFields}
         fields={formFields}

@@ -52,7 +52,7 @@ export function Login() {
     return (
       <BankForm
         bgcolor="primary"
-        label="Login"
+        buttonSubmit="Login"
         handle={handleLogin}
         validateFields={validateFields}
         fields={formFields}

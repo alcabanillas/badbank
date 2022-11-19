@@ -71,7 +71,7 @@ export function CreateAccount() {
 
     return (
       <BankForm
-        label="Create Account"
+        buttonSubmit="Create Account"
         handle={handleCreate}
         validateFields={validateFields}
         fields={formFields}

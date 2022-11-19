@@ -50,7 +50,7 @@ export const Deposit = () => {
   const renderWithDrawForm = () => {
     return (
       <BankForm
-        label="Deposit"
+        buttonSubmit="Deposit"
         handle={handleSubmit}
         validateFields={validateFields}
         fields={formFields}
