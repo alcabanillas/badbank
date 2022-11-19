@@ -11,7 +11,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("../public/images/bodyBG.jpg");
-  background-size: cover; /* Resize the background image to cover the entire container */
+  background-size: cover;
+  /* Resize the background image to cover the entire container */
 }
 
 code {
@@ -34,8 +35,14 @@ code {
   gap: 15px;
 }
 
-.errorField{
+.errorField {
   color: red;
 }
 
-
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: aliceblue;
+}

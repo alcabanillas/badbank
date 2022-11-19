@@ -19,7 +19,7 @@ function BankForm({ buttonSubmit, handle, fields, initialData, schema }) {
       {({ handleSubmit, handleChange, touched, isValid, errors, dirty }) => (
         <Form className="mb-3" noValidate onSubmit={handleSubmit}>
           {fields.map((elem, index) => {
-            let isPassword = (elem.type == 'password')
+            let isPassword = (elem.type === 'password')
 
             return (
               <Form.Group className="mb-3" key={index}>

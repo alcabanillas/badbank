@@ -7,8 +7,9 @@ import { Login } from "./pages/login";
 import { Deposit } from "./pages/deposit";
 import { WithDraw } from "./pages/withdraw";
 import { AllData } from "./pages/alldata";
+import { Footer } from "./routes/footer";
 
-//import "bootstrap/dist/css/bootstrap.css";
+
 import "bootswatch/dist/flatly/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap";
 import { ContextProvider } from "./state/AppState";
@@ -30,6 +31,7 @@ function App() {
               <Route path="alldata" element={<AllData />}></Route>
             </Routes>
         </div>
+        <Footer />
         </ToastContextProvider>
       </Router>
     </ContextProvider>
