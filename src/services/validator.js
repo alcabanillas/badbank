@@ -16,3 +16,9 @@ export const validateEmail = (email) => {
     return { Email: "Username should be and email" };
   return {};
 };
+
+export const validatePassword = (password) => {
+  if (!password) return { Password: "Field required" };
+  if (password.length < 8) return { Password: "Password must have at least 8 chars"}
+  return {};
+};

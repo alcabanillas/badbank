@@ -3,7 +3,7 @@ import { UsersContext } from "../state/AppState";
 import { BankForm } from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 import { CustomToast } from "../components/customtoast";
-import { validateEmail } from "../services/validator";
+import { validateEmail, validatePassword } from "../services/validator";
 
 
 export function CreateAccount() {
@@ -51,11 +51,7 @@ export function CreateAccount() {
     return {};
   };
 
-  const validatePassword = (password) => {
-    if (!password) return { Password: "Field required" };
-    if (password.length < 8) return { Password: "Password must have at least 8 chars"}
-    return {};
-  };
+
 
   const validateFields = (values) => {
     let errors = {};
