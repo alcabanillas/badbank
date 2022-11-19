@@ -1,19 +1,16 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
+import { useToastContext} from "../state/CustomToast";
 import  BankForm from "../components/bankform";
 import { BankCard } from "../components/bankcard";
-import { CustomToast } from "../components/customtoast";
+
 import * as yup from "yup";
 
 
 export function CreateAccount() {
   const { actions } = useContext(UsersContext);
   const [show, setShow ] = useState(true)
-  const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
-
-  const toggleShowToast = () => {
-    setToastProps({...toastProps, showToast : false});
-  }
+  const addToast = useToastContext();
 
   const handleCreate = (data) => {
 
@@ -26,9 +23,9 @@ export function CreateAccount() {
 
     if (result) {
       setShow(false)
-      setToastProps({showToast: true, text: 'Account successfully created', type: 'success'})
+      addToast({text: 'Account successfully created', type: 'success'})
     } else {
-      setToastProps({showToast: true, text: errorMessage, type: 'error'})
+      addToast({text: errorMessage, type: 'error'})
     }
 
     return {result, errorMessage};
@@ -85,7 +82,6 @@ export function CreateAccount() {
 
   return (
     <div className="card-container create-account">
-      <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>
       <BankCard 
         txtcolor="black"
         header="Create account"

@@ -1,31 +1,28 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
+import { useToastContext} from "../state/CustomToast";
 import { BankCard } from "../components/bankcard";
 import  BankForm from "../components/bankform";
-import { CustomToast } from "../components/customtoast";
+
 import * as yup from "yup";
 
 
 export const WithDraw = () => {
   const { usersState, actions } = useContext(UsersContext);
-  const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
+  const addToast = useToastContext();
 
   const user = usersState.users.find(
     (elem) => elem.email === usersState.currentUser
   );
 
-  const toggleShowToast = () => {
-    setToastProps({...toastProps, showToast : false});
-  }
-
   const handleSubmit = (data) => {
     const {result, errorMessage } = actions.withDraw(Number(data.Amount));
     
     if (result) {
-      setToastProps({showToast: true, text: 'Withdraw successfully done', type: 'success'})
+      addToast({text: 'Withdraw successfully done', type: 'success'})
     }
     else {
-      setToastProps({showToast: true, text: errorMessage, type: 'error'})
+      addToast({text: errorMessage, type: 'error'})
     }
 
     return {result, errorMessage: ''};
@@ -63,7 +60,6 @@ export const WithDraw = () => {
 
   return (
     <div className="card-container WithDraw">
-      <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>
       <BankCard 
         txtcolor="black"
         header="WithDraw"

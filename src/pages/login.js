@@ -1,17 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
+import { useToastContext} from "../state/CustomToast";
 import  BankForm  from "../components/bankform";
 import { BankCard } from "../components/bankcard";
-import { CustomToast } from "../components/customtoast";
 import * as yup from "yup";
 
 export function Login() {
   const { usersState, actions } = useContext(UsersContext);
-  const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
-
-  const toggleShowToast = () => {
-    setToastProps({...toastProps, showToast : false});
-  }
+  const addToast = useToastContext();
 
   let formFields = [
     { id: "Email", placeholder: "Enter email", type: "email" },
@@ -32,10 +28,10 @@ export function Login() {
     const {result, errorMessage} = actions.login({ email: data.Email, password: data.Password });
 
     if (result) {
-      setToastProps({showToast: true, text: 'User logged in', type: 'success'})
+      addToast({text: 'User logged in', type: 'success'});
     }
     else {
-      setToastProps({showToast: true, text: errorMessage, type: 'error'})      
+      addToast({text: errorMessage, type: 'error'})
     }
   }
 
@@ -62,7 +58,6 @@ export function Login() {
 
   return (
     <div className="card-container login">
-      <CustomToast show={toastProps.showToast} header={`Bad bank`} text={toastProps.text} type={toastProps.type} toggleShow={toggleShowToast}/>      
       <BankCard
         width="20rem"
         txtcolor="black"

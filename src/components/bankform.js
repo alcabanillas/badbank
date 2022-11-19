@@ -11,12 +11,7 @@ function BankForm({buttonSubmit,
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values, resetForm) => {
-        const {result} = handle(values);
-        if (result){
-          resetForm({ values: initialData});
-        }
-      }}
+      onSubmit={handle}
       initialValues={initialData}
     >
       {({
