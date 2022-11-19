@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankCard } from "../components/bankcard";
-import BankForm  from "../components/bankform";
+import  BankForm from "../components/bankform";
 import { CustomToast } from "../components/customtoast";
-import { validateAmount } from "../services/validator";
 import * as yup from "yup";
 
 
@@ -48,13 +47,12 @@ export const WithDraw = () => {
       .min(0, 'Amount must be a positive number')
       .required()
   });
-
-
+  
 
   const renderWithDrawForm = () => {
     return (
       <BankForm
-        buttonSubmit="Deposit"
+        buttonSubmit="WithDraw"
         handle={handleSubmit}
         fields={formFields}
         initialData={initialValues}

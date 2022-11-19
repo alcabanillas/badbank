@@ -19,7 +19,6 @@ export const Deposit = () => {
   }
 
   const handleSubmit = (data) => {
-    debugger
     const {result, errorMessage } = actions.deposit(Number(data.Amount));
     
     if (result) {
