@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { BankForm } from "../components/bankform";
+import  BankForm from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 import { CustomToast } from "../components/customtoast";
-import { validateEmail, validatePassword } from "../services/validator";
+import * as yup from "yup";
 
 
 export function CreateAccount() {
@@ -46,37 +46,25 @@ export function CreateAccount() {
     Email: "",
   };
 
-  const validateName = (data) => {
-    if (!data) return { Name: "Field required" };
-    return {};
-  };
+  const schema = yup.object().shape({
+    Name: yup.string().required(),
+    Email: yup.string().email('User must be a valid email').required(),
+    Password: yup.string().min(8,'Password must have at least 8 chars').required()
+  });
 
-
-
-  const validateFields = (values) => {
-    let errors = {};
-
-    errors = { ...validateName(values.Name) };
-    errors = { ...errors, ...validateEmail(values.Email) };
-    errors = { ...errors, ...validatePassword(values.Password) };
-
-    return errors;
-  };
-
+ 
   const clearForm = () => {
     setShow(true)
   }
 
   const renderCreateAccountForm = () => {
-
     return (
       <BankForm
         buttonSubmit="Create Account"
         handle={handleCreate}
-        validateFields={validateFields}
         fields={formFields}
-        initialValues={initialValues}
-        hideAmount={true}
+        initialData={initialValues}
+        schema={schema}
       />
     );
   };
@@ -86,7 +74,7 @@ export function CreateAccount() {
       <div className="create-account">
         <h5>Success</h5>
         <div className="">
-        <button type="submit" className="btn btn-light" onClick={ () => clearForm()}>
+        <button type="submit" className="btn btn-primary" onClick={ () => clearForm()}>
         Add another account
         </button>
         </div>

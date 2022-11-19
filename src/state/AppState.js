@@ -62,7 +62,6 @@ const useActions = (state, dispatch) => {
   }
 
   const login = (credentials) => {
-    debugger
     let currentUser = state.users.find( elem => elem.email === credentials.email && elem.password === credentials.password)
 
     if (!currentUser) {

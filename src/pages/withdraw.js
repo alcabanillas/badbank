@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
 import { BankCard } from "../components/bankcard";
-import { BankForm } from "../components/bankform";
+import BankForm  from "../components/bankform";
 import { CustomToast } from "../components/customtoast";
 import { validateAmount } from "../services/validator";
+import * as yup from "yup";
 
 
 export const WithDraw = () => {
@@ -18,23 +19,6 @@ export const WithDraw = () => {
     setToastProps({...toastProps, showToast : false});
   }
 
-  let formFields = [
-    { id: "Amount", placeholder: "Enter amount", type: "input" },
-  ];
-
-  let initialValues = {
-    Amount: "",
-  };
-
-  const validateFields = (values) => {
-    let errors = {};
-
-    errors = { ...validateAmount(values.Amount) };
-
-    return errors;
-  };
-
-
   const handleSubmit = (data) => {
     const {result, errorMessage } = actions.withDraw(Number(data.Amount));
     
@@ -48,14 +32,33 @@ export const WithDraw = () => {
     return {result, errorMessage: ''};
   };
 
+  let formFields = [
+    { id: "Amount", placeholder: "Enter amount", type: "input" },
+  ];
+
+  let initialValues = {
+    Amount: "",
+  };
+
+  const schema = yup.object().shape({
+    Amount: yup.number()
+      .test('is-decimal','Amount must be a currency', 
+        value => value.toString().match(/^-?\d+(\.\d{1,2})?$/g))
+      .typeError('Amount must be a valid number')
+      .min(0, 'Amount must be a positive number')
+      .required()
+  });
+
+
+
   const renderWithDrawForm = () => {
     return (
       <BankForm
-        buttonSubmit="WithDraw"
+        buttonSubmit="Deposit"
         handle={handleSubmit}
-        validateFields={validateFields}
         fields={formFields}
-        initialValues={initialValues}
+        initialData={initialValues}
+        schema={schema}
       />
     );
   }

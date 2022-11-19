@@ -1,27 +1,14 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { BankForm } from "../components/bankform";
+import  BankForm  from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 import { validateEmail } from "../services/validator";
 import { CustomToast } from "../components/customtoast";
+import * as yup from "yup";
 
 export function Login() {
   const { usersState, actions } = useContext(UsersContext);
   const [ toastProps, setToastProps ] = useState({showToast : false, text: '', background: '',  })
-
-  const validatePassword = (password) => {
-    if (!password) return { Password: "Field required" };
-    return {};
-  };
-
-  const validateFields = (values) => {
-    let errors = {};
-
-    errors = { ...validateEmail(values.Email) };
-    errors = { ...errors, ...validatePassword(values.Password) };
-
-    return errors;
-  };
 
   const toggleShowToast = () => {
     setToastProps({...toastProps, showToast : false});
@@ -37,6 +24,11 @@ export function Login() {
     Password: "",
   };
 
+  const schema = yup.object().shape({
+    Email: yup.string().email('User must be a valid email').required(),
+    Password: yup.string().required()
+  });
+
   function handleLogin(data) {
     const {result, errorMessage} = actions.login({ email: data.Email, password: data.Password });
 
@@ -51,13 +43,11 @@ export function Login() {
   const renderLoginForm = () => {
     return (
       <BankForm
-        bgcolor="primary"
         buttonSubmit="Login"
         handle={handleLogin}
-        validateFields={validateFields}
         fields={formFields}
-        initialValues={initialValues}
-        successButton="Logout"
+        initialData={initialValues}
+        schema={schema}
       />
     );
   };
