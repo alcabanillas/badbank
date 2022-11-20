@@ -41,10 +41,6 @@ function reducer(state, action) {
         currentUser: null };
     case actions.UPDATE_USERS:
       return {...state, users: action.payload}
-    case "SET_SUCCESS":
-      return {...state, success: action.payload}
-    case actions.SET_ERROR:
-      return {...state, showError: action.payload.showError, errorMessage: action.payload.errorMessage}
     default:
       throw new Error();
   }
@@ -106,17 +102,12 @@ const useActions = (state, dispatch) => {
     return {result : true};
   }
 
-  const clearError = () => {
-    dispatch({type: actions.SET_ERROR, payload : {showError:false, errorMessage: ''}})
-  }
-
   return {
     addUser,
     login,
     logout,
     withDraw,
-    deposit,
-    clearError
+    deposit
   }
 
 }
