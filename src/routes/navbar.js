@@ -1,22 +1,10 @@
 import { useContext } from "react";
 import { UsersContext } from "../state/AppState";
 import { Navigate, NavLink } from "react-router-dom";
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { CustomTooltip } from "../components/customtooltip";
 
 export function NavBar() {
   const { usersState, actions } = useContext(UsersContext);
-
-  const renderToolTip = (props) => (
-    <Tooltip id={`tooltip-${props.tooltipId}`}>{props.text}</Tooltip>
-  );
-
-  const CustomTooltip = (props) => {
-    return (
-      <OverlayTrigger placement={props.placement || "bottom"} overlay={renderToolTip(props)}>
-        {props.children}
-      </OverlayTrigger>
-    );
-  };
 
   const isUserLoggedIn = usersState.currentUser ? "" : "disabled";
 
