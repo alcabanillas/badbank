@@ -16,7 +16,7 @@ export function CreateAccount() {
       name: data.Name,
       email: data.Email,
       password: data.Password,
-      balance: 100,
+      balance: 0,
     });
 
     if (result) {

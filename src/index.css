@@ -34,6 +34,11 @@ code {
   gap: 15px;
 }
 
+.card {
+  padding: 10px;
+  box-shadow: 0rem 1rem 0.5rem  rgba(0, 0, 0);
+}
+
 
 footer {
   position: fixed;
