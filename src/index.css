@@ -23,7 +23,6 @@ code {
 .center {
   margin: auto;
   width: 50%;
-  padding: 10px;
 }
 
 
@@ -35,9 +34,6 @@ code {
   gap: 15px;
 }
 
-.errorField {
-  color: red;
-}
 
 footer {
   position: fixed;

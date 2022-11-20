@@ -1,20 +1,18 @@
 import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { useToastContext} from "../state/CustomToast";
-import  BankForm from "../components/bankform";
+import { useToastContext } from "../state/CustomToast";
+import BankForm from "../components/bankform";
 import { BankCard } from "../components/bankcard";
 
 import * as yup from "yup";
 
-
 export function CreateAccount() {
   const { actions } = useContext(UsersContext);
-  const [show, setShow ] = useState(true)
+  const [show, setShow] = useState(true);
   const addToast = useToastContext();
 
   const handleCreate = (data) => {
-
-    const {result, errorMessage} = actions.addUser({
+    const { result, errorMessage } = actions.addUser({
       name: data.Name,
       email: data.Email,
       password: data.Password,
@@ -22,13 +20,13 @@ export function CreateAccount() {
     });
 
     if (result) {
-      setShow(false)
-      addToast({text: 'Account successfully created', type: 'success'})
+      setShow(false);
+      addToast({ text: "Account successfully created", type: "success" });
     } else {
-      addToast({text: errorMessage, type: 'error'})
+      addToast({ text: errorMessage, type: "error" });
     }
 
-    return {result, errorMessage};
+    return { result, errorMessage };
   };
 
   let formFields = [
@@ -45,14 +43,16 @@ export function CreateAccount() {
 
   const schema = yup.object().shape({
     Name: yup.string().required(),
-    Email: yup.string().email('User must be a valid email').required(),
-    Password: yup.string().min(8,'Password must have at least 8 chars').required()
+    Email: yup.string().email("User must be a valid email").required(),
+    Password: yup
+      .string()
+      .min(8, "Password must have at least 8 chars")
+      .required(),
   });
 
- 
   const clearForm = () => {
-    setShow(true)
-  }
+    setShow(true);
+  };
 
   const renderCreateAccountForm = () => {
     return (
@@ -70,24 +70,23 @@ export function CreateAccount() {
     return (
       <div className="create-account">
         <h5>Success</h5>
-        <div className="">
-        <button type="submit" className="btn btn-primary" onClick={ () => clearForm()}>
-        Add another account
-        </button>
+        <div className="mb-3">User account created successfully</div>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary" onClick={() => clearForm()} >
+            Add another account
+          </button>
         </div>
       </div>
     );
   };
 
-
   return (
     <div className="card-container create-account">
-      <BankCard 
+      <BankCard
         txtcolor="black"
         header="Create account"
         body={show ? renderCreateAccountForm() : renderNewAccount()}
       />
-      
     </div>
   );
 }

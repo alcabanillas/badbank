@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UsersContext } from "../state/AppState";
-import { useToastContext} from "../state/CustomToast";
+import { useToastContext } from "../state/CustomToast";
 import { BankCard } from "../components/bankcard";
-import  BankForm from "../components/bankform";
+import BankForm from "../components/bankform";
 import * as yup from "yup";
-
 
 export const Deposit = () => {
   const { usersState, actions } = useContext(UsersContext);
+  const [show, setShow] = useState(true);
   const addToast = useToastContext();
 
   const user = usersState.users.find(
@@ -15,16 +15,16 @@ export const Deposit = () => {
   );
 
   const handleSubmit = (data) => {
-    const {result, errorMessage } = actions.deposit(Number(data.Amount));
-    
+    const { result, errorMessage } = actions.deposit(Number(data.Amount));
+
     if (result) {
-      addToast({text: 'Deposit successfully done', type: 'success'})
-    }
-    else {
-      addToast({text: errorMessage, type: 'error'})
+      setShow(false);
+      addToast({ text: "Deposit successfully done", type: "success" });
+    } else {
+      addToast({ text: errorMessage, type: "error" });
     }
 
-    return {result, errorMessage: ''};
+    return { result, errorMessage: "" };
   };
 
   let formFields = [
@@ -36,14 +36,32 @@ export const Deposit = () => {
   };
 
   const schema = yup.object().shape({
-    Amount: yup.number()
-      .test('is-decimal','Amount must be a currency', 
-        value => value.toString().match(/^-?\d+(\.\d{1,2})?$/g))
-      .typeError('Amount must be a valid number')
-      .min(0, 'Amount must be a positive number')
-      .required()
+    Amount: yup
+      .number()
+      .test("is-decimal", "Amount must be a currency", (value) =>
+        value.toString().match(/^-?\d+(\.\d{1,2})?$/g)
+      )
+      .typeError("Amount must be a valid number")
+      .min(0.01, "Amount must be a positive number")
+      .required(),
   });
-  
+
+  const clearForm = () => {
+    setShow(true);
+  };
+
+  const renderNewOperation = () => {
+    return (
+      <div>
+        <div className="mb-3">Your balance has been updated</div>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary" onClick={() => clearForm()}>
+            New operation
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   const renderDepositForm = () => {
     return (
@@ -55,23 +73,26 @@ export const Deposit = () => {
         schema={schema}
       />
     );
-  }
+  };
 
   return (
-    <div className="card-container Deposit">
-      <BankCard 
+    <div className="card-container deposit">
+      <BankCard
         txtcolor="black"
         header="Deposit"
         body={
-          usersState.currentUser? (
-          <div>
-            <h3 className="col" id="total">
-              Balance ${user.balance}
-            </h3>
-            {renderDepositForm()}
-          </div>):(<div>You must be logged in to use this function</div>)}
+          usersState.currentUser ? (
+            <div>
+              <h3 className="col text-center mb-3" id="total">
+                Balance ${user.balance}
+              </h3>
+              {show ? renderDepositForm() : renderNewOperation()}
+            </div>
+          ) : (
+            <div>You must be logged in to use this function</div>
+          )
+        }
       />
     </div>
-  );  
-
+  );
 };
